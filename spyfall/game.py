@@ -83,7 +83,7 @@ class Game:
     async def show_player(self):
         playing = 'Текущие игроки:\n'
         for i, player in enumerate(self.players, 1):
-            playing += "%s. **%s#%s**" % (i, player.channel.nick, player.channel.discriminator)
+            playing += "%s. **%s#%s**\n" % (i, player.channel.display_name, player.channel.discriminator)
 
         await self.channel.send(embed=Embed(description=playing, colour=config.PREGAME))
     
@@ -113,7 +113,7 @@ class Game:
             title="TraitorFall - Locations List", 
             description="\n".join("%s. **%s**" % (i, l['Location']) for i, l in enumerate(self.loc_list, 1))))
 
-        while self.is_alive and time.time() < self.time_left:
+        while self.is_live and time.time() < self.time_left:
             await asyncio.sleep(1)
 
         # Loop exited, game has ended or has run out of time. End it and clear messages.
@@ -150,6 +150,6 @@ class Game:
             description = 'Локацией было --> **%s**\n\n' % self.location['Location']
         
             for i, player in enumerate(self.players):
-                playing += "%s. **%s#%s**" % (i, player.channel.nick, player.channel.discriminator)
+                playing += "%s. **%s#%s**\n" % (i, player.channel.display_name, player.channel.discriminator)
     
             await self.channel.send(embed=Embed(title=title, description=description, colour=config.SHOW_END))
