@@ -150,7 +150,6 @@ class Game:
     async def end_game(self, force=0):
         if force or time.time() > self.time_left:
             self.is_live = False
-            self.players.clear()
 
             title = 'TraitorFall - Reveal'
             description = 'Локацией было --> **%s**\n\n' % self.location['Location']
@@ -158,4 +157,5 @@ class Game:
             for i, player in enumerate(self.players):
                 playing += "%s. **%s#%s**\n" % (i, player.channel.display_name, player.channel.discriminator)
     
+            self.players.clear()
             await self.channel.send(embed=Embed(title=title, description=description, colour=config.SHOW_END))
