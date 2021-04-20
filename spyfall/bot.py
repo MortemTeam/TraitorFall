@@ -32,7 +32,7 @@ async def on_message(message):
         await game.show_player()
 
     if check_trigger('loc'):
-        await game.show_locations()
+        await game.show_locations(message.author)
 
     if not game.is_live:
         if check_trigger('start'):
