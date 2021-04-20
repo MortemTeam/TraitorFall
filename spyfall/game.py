@@ -98,8 +98,8 @@ class Game:
         for player in self.players:
             description = "Ваша роль ---> **ПРЕДАТЕЛЬ** \n Локация ---> *???*"
             if player.role != SPY:
-                description = "Ваша роль ---> **%s** \nЛокация ---> *%s*" % (player.role, self.location['Location'])
                 player.role = random.choice(self.location['Roles'])
+                description = "Ваша роль ---> **%s** \nЛокация ---> *%s*" % (player.role, self.location['Location'])
 
             await player.channel.send(embed=Embed(title=title, description=description, colour=config.SHOW_CREDITS))
         
