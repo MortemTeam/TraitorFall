@@ -154,8 +154,8 @@ class Game:
             title = 'TraitorFall - Reveal'
             description = 'Локацией было --> **%s**\n\n' % self.location['Location']
         
-            for i, player in enumerate(self.players):
-                description += "%s. **%s#%s**\n" % (i, player.channel.display_name, player.channel.discriminator)
+            for i, player in enumerate(self.players, 1):
+                description += "%s. **%s#%s** (%s)\n" % (i, player.channel.display_name, player.channel.discriminator, player.role)
     
             self.players.clear()
             await self.channel.send(embed=Embed(title=title, description=description, colour=config.SHOW_END))
