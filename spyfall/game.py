@@ -108,7 +108,7 @@ class Game:
         locs = await self.channel.send(embed=Embed(
             colour=config.SHOW_CREDITS,
             title="TraitorFall - Locations List", 
-            description="\n".join("%s. **%s**" % (i, l) for i, l in enumerate(self.loc_list['Location'], 1))))
+            description="\n".join("%s. **%s**" % (i, l['Location']) for i, l in enumerate(self.loc_list, 1))))
 
         while self.alive and time.time() < self.time_left:
             await asyncio.sleep(1)
