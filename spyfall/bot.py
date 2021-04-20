@@ -19,6 +19,9 @@ async def on_ready():
     print("Bot User-Name: %s" % bot.user)
     print("Bot User-ID: %s" % bot.user.id)
     print("--------------------")
+    
+    game.channel = await bot.fetch_channel(config.GAME_CHANNEL)
+    game.guild   = await bot.fetch_guild(config.GAME_GUILD)    
 
 @bot.event
 async def on_message(message):

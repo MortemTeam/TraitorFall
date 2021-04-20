@@ -39,8 +39,8 @@ class Game:
         self.loc_list = self._game_data['locations']
         
         # messagable pipe
-        self.channel = await bot.fetch_channel(config.GAME_CHANNEL)
-        self.guild   = await bot.fetch_guild(config.GAME_GUILD)
+        self.channel = None
+        self.guild   = None
         
         # list of player objects
         self.players = []
