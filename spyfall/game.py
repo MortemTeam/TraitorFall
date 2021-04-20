@@ -80,7 +80,7 @@ class Game:
                 return player
     
     async def show_locations(self):
-        locs = await self.channel.send(embed=Embed(
+        await self.channel.send(embed=Embed(
             colour=config.SHOW_CREDITS,
             title="TraitorFall - Locations List", 
             description="\n".join("%s. **%s**" % (i, l['Location']) for i, l in enumerate(self.loc_list, 1))))        
