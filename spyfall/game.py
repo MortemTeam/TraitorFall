@@ -125,14 +125,14 @@ class Game:
     async def choice_location(self, user_channel, choice):
         player = self.get_player(user_channel)
         if player.role != SPY or not(choice.isdigit()) or not(0 < choice < len(self.loc_list) + 1):
-            await self.channel.send(Embed(description="<@%s> наказан" % user_channel.id, colour=config.ANTITRAIT))
+            await self.channel.send(embed=Embed(description="<@%s> наказан" % user_channel.id, colour=config.ANTITRAIT))
             return await user_channel.add_roles(config.ANTITRAITOR)
         
         self.end_game(1)
         choice = int(choice)
         
         description = "<@%s> тренируйся лучше, ты проиграл!"
-        if self.loc_list[choice+1] == self.location:
+        if self.loc_list[choice-1] == self.location:
             description = "<@%s> победил в игре!"
         await self.channel.send(embed=Embed(description=description, colour=config.SHOW_END))
 

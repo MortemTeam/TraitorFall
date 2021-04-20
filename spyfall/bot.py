@@ -44,7 +44,7 @@ async def on_message(message):
     if game.get_player(message.author):
         # choice location by Traitor
         if check_trigger('c'):
-            await game.choice_location(message.author, message.content)
+            await game.choice_location(message.author, message.content.split(" ")[-1])
         
         if check_trigger('reveal'):
             await game.end_game()        
