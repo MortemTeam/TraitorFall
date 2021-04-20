@@ -79,8 +79,8 @@ class Game:
             if player.channel == user_channel:
                 return player
     
-    async def show_locations(self):
-        await self.channel.send(embed=Embed(
+    async def show_locations(self, user_channel):
+        await user_channel.send(embed=Embed(
             colour=config.SHOW_CREDITS,
             title="TraitorFall - Locations List", 
             description="\n".join("%s. **%s**" % (i, l['Location']) for i, l in enumerate(self.loc_list, 1))))        
