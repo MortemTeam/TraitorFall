@@ -148,7 +148,7 @@ class Game:
 
     # reveal identity of the spy
     async def end_game(self, force=0):
-        if force or time.time() > self.time_left():
+        if force or time.time() > self.time_left:
             self.is_live = False
             self.players.clear()
 
