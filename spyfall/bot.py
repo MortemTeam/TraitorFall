@@ -12,15 +12,13 @@ bot_token = config.TOKEN
 bot_trigger = config.PREFIX
 
 bot = Bot(command_prefix=bot_trigger)
-game = game.Game()
+game = game.Game(bot)
 
 @bot.event
 async def on_ready():
     print("Bot User-Name: %s" % bot.user)
     print("Bot User-ID: %s" % bot.user.id)
     print("--------------------")
-    
-    game.channel = await bot.fetch_channel(config.GAME_CHANNEL)
 
 @bot.event
 async def on_message(message):

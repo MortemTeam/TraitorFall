@@ -21,7 +21,9 @@ class Player:
 
 # object to keep track of game state
 class Game:
-    def __init__(self):
+    def __init__(self, bot):
+        self.bot = bot
+
         # variable for config location
         self.LOCATIONS_FILE = 'spyfall_locations.json'
 
@@ -37,7 +39,8 @@ class Game:
         self.loc_list = self._game_data['locations']
         
         # messagable pipe
-        self.channel = None
+        self.channel = await bot.fetch_channel(config.GAME_CHANNEL)
+        self.guild   = await bot.fetch_guild(config.GAME_GUILD)
         
         # list of player objects
         self.players = []
@@ -126,6 +129,7 @@ class Game:
         player = self.get_player(user_channel)
         if player.role != SPY or not(choice.isdigit()) or not(0 < choice < len(self.loc_list) + 1):
             await self.channel.send(embed=Embed(description="<@%s> наказан" % user_channel.id, colour=config.ANTITRAIT))
+            role = guild.get_role(config.ANTITRAITOR)
             return await user_channel.add_roles(config.ANTITRAITOR)
         
         self.end_game(1)
