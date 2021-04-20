@@ -1,28 +1,49 @@
-from player import Player
 import random
 import sys
 import os
 import json
+import time
+
+import config
+from discord import Embed
+
+SPY = "Traitor"
+
+# object to keep track of players in the game
+class Player:
+    def __init__(self, channel):
+        # discord messagable pipe
+        self.channel = channel
+        
+        # game role
+        self.role = None
+
 
 # object to keep track of game state
 class Game:
-
     def __init__(self):
-
         # variable for config location
         self.LOCATIONS_FILE = 'spyfall_locations.json'
 
+        # locations, roles and other json settings
+        if os.path.exists(self.LOCATIONS_FILE):
+            with open(self.LOCATIONS_FILE, 'r') as locations_file:
+                self._game_data = json.load(locations_file)
+        else:
+            print("The file %s does not exist or cannot be opened" % LOCATIONS_FILE)
+            sys.exit(-1)
+        
+        # location list
+        self.loc_list = self._game_data['locations']
+        
+        # messagable pipe
+        self.channel = None
+        
         # list of player objects
         self.players = []
 
         # keeps track of the current location (int index of locations json key)
         self.location = None
-
-        # locations, roles and other json settings
-        self._game_data = None
-
-        # location list
-        self.loc_list = []
 
         # game is live only when it is started, by default it is not
         self.is_live = False
@@ -33,128 +54,98 @@ class Game:
         # time left in seconds
         self.time_left = self.round_time
 
-    # reveal identity of the spy
-    def end_game(self):
-        for player in self.players:
-            if (player.role == "spy"):
-                print("The spy was %s!" % player.discord_user_name)
-
-        # Reset time
-        self.time_left = self.round_time
-        self.is_live = False
-
     # add player to game
-    def join_player(self, discord_user_name):
-        player_exists = False
+    async def join_player(self, user_channel):
         for player in self.players:
-            if player.name == discord_user_name:
-                player_exists = True
-
-        if player_exists:
-            print ("That player is already in the game!")
-            # Make this send the message so the people can see it
-        else:
-            player = Player(discord_user_name)
-            self.players.append(player)
-
+            if player.channel == user_channel:
+                return
+    
+        self.players.append(Player(user_channel))
+        await self.channel.send(embed=Embed(description="<@%s> присоединяется к игре" % user_channel.id, colour=config.PREGAME))
+        
     # remove player from game
-    def leave_player(self, discord_user_name):
-        for i in range(len(self.players)-1):
-            if self.players[i].name ==  discord_user_name:
-                del self.players[i]
-
-    # choose a random location
-    def assign_location(self):
-        if (self._game_data != None):
-            locations = self._game_data['locations']
-            self.location = random.randint(0,len(locations)-1)
-        else:
-            self._load_data()
-            self.assign_location()
-
-    # assign random roles to each player
-    def assign_roles(self):
-        if (self.location != None):
-            spy = random.randint(0,len(self.players)-1)
-            self.players[spy].role = "Spy"
-
-            roles = self._game_data['locations'][self.location]['Roles']
-            for i in range(random.randint(0,10)):
-                random.shuffle(roles)
-            cur_role = 0
-            for player in self.players:
-                if (player.role != "Spy"):
-                    player.role = roles[cur_role]
-                    if (cur_role <= len(roles)-1):
-                        cur_role += 1
-                    else:
-                        cur_role = 0
-        else:
-            self.assign_location()
-            self.assign_roles()
-
-    # removes any pre-existing roles that has been asigned, if exists
-    def clear_roles(self):
+    async def leave_player(self, user_channel):
         for player in self.players:
-            player.role = None
+            if player.channel == user_channel:
+                self.players.remove(player)
+                return await self.channel.send(embed=Embed(description="<@%s> покидает игру." % user_channel.id, colour=config.PREGAME))
+    
+    # get player by pipe
+    def get_player(self, user_channel):
+        for player in self.players:
+            if player.channel == user_channel:
+                return player
+    
+    # show player to pipe
+    async def show_player(self):
+        playing = 'Текущие игроки:\n'
+        for i, player in enumerate(self.players, 1):
+            playing += "%s. **%s#%s**" % (i, player.channel.nick, player.channel.discriminator)
 
-    def get_locations(self):
-        del self.loc_list[:]
-        for i in range(len(self._game_data['locations'])):
-            self.loc_list.append(self._game_data['locations'][i]['Location'])
+        await self.channel.send(embed=Embed(description=playing, colour=config.PREGAME))
+    
+    # make alive while, show roles, locations
+    async def start_game(self):
+        if len(self.players) < 3:
+            return await self.channel.send('Мало игроков.')
 
-    def purge(self):
-        del self.players[:]
+        self.is_live = True
+        self.time_left = time.time() + self.round_time
+        self.location = random.choice(self.loc_list)
+        random.choice(self.players).role = SPY
 
-    # update the _game_data variable with contents of LOCATIONS_FILE
-    def _load_data(self):
-        if os.path.exists(self.LOCATIONS_FILE):
-            with open(self.LOCATIONS_FILE, 'r') as locations_file:
-                self._game_data = json.load(locations_file)
-            locations_file.close()
-        else:
-            print("The file %s does not exist or cannot be opened" % LOCATIONS_FILE)
-            sys.exit(-1)
+        title = "TraitorFall - Game"
+        for player in self.players:
+            description = "Ваша роль ---> **ПРЕДАТЕЛЬ** \n Локация ---> *???*"
+            if player.role != SPY:
+                description = "Ваша роль ---> **%s** \nЛокация ---> *%s*" % (player.role, self.location['Location'])
+                player.role = random.choice(self.location['Roles'])
 
-    def start_game(self):
-        if (len(self.players) > 0):
-            self._load_data()
-            self.get_locations()
-            self.clear_roles()
-            self.assign_location()
-            self.assign_roles()
-            self.is_live = True
-        else:
-            print("Must add players first")
-            # REPLACE THIS TO SEND A DISCORD MESSAGE INSTEAD
+            await player.channel.send(embed=Embed(title=title, description=description, colour=config.SHOW_CREDITS))
+        
+        await self.channel.send("Игра начинается!")
+    
+        locs = await self.channel.send(embed=Embed(
+            colour=config.SHOW_CREDITS,
+            title="TraitorFall - Locations List", 
+            description="\n".join("%s. **%s**" % (i, l) for i, l in enumerate(self.loc_list['Location'], 1))))
 
-    # ========================= #
-    #    GAME TIME FUNCTIONS    #
-    # ========================= #
-    def set_time(self, time):
-        """
-        Sets the game time without affecting the current round's elapsed time.
+        while self.alive and time.time() < self.time_left:
+            await asyncio.sleep(1)
 
-        :param time: time in seconds
-        """
-        self.round_time = time
-        if not self.is_live:
-            self.time_left = time
+        # Loop exited, game has ended or has run out of time. End it and clear messages.
+        await locs.delete()
 
-    def get_formatted_time(self):
-        """
-        Converts the currently stored time (seconds) to a formatted string of minutes and seconds.
+        # If game is still live, it means the spy has not been revealed yet even though the time is up.
+        # Players still have a last chance to vote who the spy is before ending the game.
+        if self.is_live:
+            await self.channel.send("Время вышло! Укажите шпиона.")        
 
-        :return: formatted time string in {minutes}:{seconds}
-        """
-        minutes, seconds = divmod(self.time_left, 60)
-        return "Time Left - {}:{:02d}".format(minutes, seconds)
+    # take end by Traitor
+    async def choice_location(self, user_channel, choice):
+        player = self.get_player(user_channel)
+        if player.role != SPY or not(choice.isdigit()) or not(0 < choice < len(self.loc_list) + 1):
+            await self.channel.send(Embed(description="<@%s> наказан" % user_channel.id, colour=config.ANTITRAIT))
+            return await user_channel.add_roles(config.ANTITRAITOR)
+        
+        self.end_game(1)
+        choice = int(choice)
+        
+        description = "<@%s> тренируйся лучше, ты проиграл!"
+        if self.loc_list[choice+1] == self.location:
+            description = "<@%s> победил в игре!"
+        await self.channel.send(embed=Embed(description=description, colour=config.SHOW_END))
 
-    def tick(self):
-        """
-        Ticks down the timer by 1 second.
+    # reveal identity of the spy
+    async def end_game(self, force=0):
+        if force or time.time() > self.time_left():
+            self.is_live = False
+            self.players.clear()
 
-        :return: True if the timer is still ticking, False if the timer reaches zero
-        """
-        self.time_left -= 1
-        return self.time_left > 0
+            title = 'TraitorFall - Reveal'
+            description = 'Локацией было --> **%s**\n\n' % self.location['Location']
+        
+            for i, player in enumerate(self.players):
+                playing += "%s. **%s#%s**" % (i, player.channel.nick, player.channel.discriminator)
+    
+            await self.channel.send(embed=Embed(title=title, description=description, colour=config.SHOW_END))
