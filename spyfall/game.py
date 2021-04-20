@@ -110,7 +110,7 @@ class Game:
             title="TraitorFall - Locations List", 
             description="\n".join("%s. **%s**" % (i, l['Location']) for i, l in enumerate(self.loc_list, 1))))
 
-        while self.alive and time.time() < self.time_left:
+        while self.is_alive and time.time() < self.time_left:
             await asyncio.sleep(1)
 
         # Loop exited, game has ended or has run out of time. End it and clear messages.
