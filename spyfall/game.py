@@ -155,7 +155,7 @@ class Game:
             description = 'Локацией было --> **%s**\n\n' % self.location['Location']
         
             for i, player in enumerate(self.players):
-                playing += "%s. **%s#%s**\n" % (i, player.channel.display_name, player.channel.discriminator)
+                description += "%s. **%s#%s**\n" % (i, player.channel.display_name, player.channel.discriminator)
     
             self.players.clear()
             await self.channel.send(embed=Embed(title=title, description=description, colour=config.SHOW_END))
