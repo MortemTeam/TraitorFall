@@ -79,6 +79,12 @@ class Game:
             if player.channel == user_channel:
                 return player
     
+    async def show_locations(self):
+        locs = await self.channel.send(embed=Embed(
+            colour=config.SHOW_CREDITS,
+            title="TraitorFall - Locations List", 
+            description="\n".join("%s. **%s**" % (i, l['Location']) for i, l in enumerate(self.loc_list, 1))))        
+    
     # show player to pipe
     async def show_player(self):
         playing = 'Текущие игроки:\n'
@@ -127,16 +133,15 @@ class Game:
     # take end by Traitor
     async def choice_location(self, user_channel, choice):
         player = self.get_player(user_channel)
-        if player.role != SPY or not(choice.isdigit()) or not(0 < choice < len(self.loc_list) + 1):
+        if player.role != SPY or not(choice.isdigit()) or not(0 < int(choice) < len(self.loc_list) + 1):
             await self.channel.send(embed=Embed(description="<@%s> наказан" % user_channel.id, colour=config.ANTITRAIT))
             role = guild.get_role(config.ANTITRAITOR)
             return await user_channel.add_roles(config.ANTITRAITOR)
         
         self.end_game(1)
-        choice = int(choice)
         
         description = "<@%s> тренируйся лучше, ты проиграл!"
-        if self.loc_list[choice-1] == self.location:
+        if self.loc_list[int(choice)-1] == self.location:
             description = "<@%s> победил в игре!"
         await self.channel.send(embed=Embed(description=description, colour=config.SHOW_END))
 
