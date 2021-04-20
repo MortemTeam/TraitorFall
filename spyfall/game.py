@@ -139,12 +139,12 @@ class Game:
             role = guild.get_role(config.ANTITRAITOR)
             return await user_channel.add_roles(config.ANTITRAITOR)
         
-        self.end_game(1)
+        await self.end_game(1)
         
         description = "<@%s> тренируйся лучше, ты проиграл!"
         if self.loc_list[int(choice)-1] == self.location:
             description = "<@%s> победил в игре!"
-        await self.channel.send(embed=Embed(description=description, colour=config.SHOW_END))
+        await self.channel.send(embed=Embed(description=description % user_channel.id, colour=config.SHOW_END))
 
     # reveal identity of the spy
     async def end_game(self, force=0):
