@@ -100,15 +100,6 @@ class Game:
         self.time_left = time.time() + self.round_time
         self.location = random.choice(self.loc_list)
         random.choice(self.players).role = SPY
-
-        title = "TraitorFall - Game"
-        for player in self.players:
-            description = "Ваша роль ---> **ПРЕДАТЕЛЬ** \n Локация ---> *???*"
-            if player.role != SPY:
-                player.role = random.choice(self.location['Roles'])
-                description = "Ваша роль ---> **%s** \nЛокация ---> *%s*" % (player.role, self.location['Location'])
-
-            await player.channel.send(embed=Embed(title=title, description=description, colour=config.SHOW_CREDITS))
         
         await self.channel.send("Игра начинается!")
     
@@ -116,7 +107,16 @@ class Game:
             colour=config.SHOW_CREDITS,
             title="TraitorFall - Locations List", 
             description="\n".join("%s. **%s**" % (i, l['Location']) for i, l in enumerate(self.loc_list, 1))))
+        
+        title = "TraitorFall - Game"
+        for player in self.players:
+            description = "Ваша роль ---> **ПРЕДАТЕЛЬ** \n Локация ---> *???*"
+            if player.role != SPY:
+                player.role = random.choice(self.location['Roles'])
+                description = "Ваша роль ---> **%s** \nЛокация ---> *%s*" % (player.role, self.location['Location'])
 
+            await player.channel.send(embed=Embed(title=title, description=description, colour=config.SHOW_CREDITS))        
+        
         while self.is_live and time.time() < self.time_left:
             await asyncio.sleep(1)
 
@@ -133,7 +133,7 @@ class Game:
         player = self.get_player(user_channel)
         if player.role != SPY or not(choice.isdigit()) or not(0 < int(choice) < len(self.loc_list) + 1):
             await self.channel.send(embed=Embed(description="<@%s> наказан" % user_channel.id, colour=config.ANTITRAIT))
-            role = guild.get_role(config.ANTITRAITOR)
+            role = self.guild.get_role(config.ANTITRAITOR)
             return await user_channel.add_roles(config.ANTITRAITOR)
         
         await self.end_game(1)
