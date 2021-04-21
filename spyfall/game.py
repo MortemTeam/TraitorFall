@@ -25,15 +25,12 @@ class Game:
     def __init__(self, bot):
         self.bot = bot
 
-        # variable for config location
-        self.LOCATIONS_FILE = 'spyfall_locations.json'
-
         # locations, roles and other json settings
-        if os.path.exists(self.LOCATIONS_FILE):
-            with open(self.LOCATIONS_FILE, 'r') as locations_file:
+        if os.path.exists(config.LOCATIONS_FILE):
+            with open(config.LOCATIONS_FILE, 'r') as locations_file:
                 self._game_data = json.load(locations_file)
         else:
-            print("The file %s does not exist or cannot be opened" % LOCATIONS_FILE)
+            print("The file %s does not exist or cannot be opened" % config.LOCATIONS_FILE)
             sys.exit(-1)
         
         # location list

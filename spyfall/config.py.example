@@ -1,9 +1,14 @@
-{
-    "discord":{
-        "token": "YOURTOKENKEYHERE!",
-        "trigger": "."
-    },
-    "other":{
-        "debug": false
-    }
-}
+from discord import Colour
+
+TOKEN = ""
+PREFIX = "."
+
+MAIN_ADMIN   = 0
+ANTITRAITOR  = 0
+GAME_GUILD   = 0
+GAME_CHANNEL = 0
+
+PREGAME      = Colour.darker_gray()
+SHOW_CREDITS = Colour.darker_gray()
+ANTITRAIT    = Colour.darker_gray()
+SHOW_END     = Colour.darker_gray()

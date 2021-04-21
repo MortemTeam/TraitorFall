@@ -1,0 +1,433 @@
+{
+    "locations":[
+        {
+            "Location":"Банк",
+            "Roles":[
+                "Robber",
+                "Teller",
+                "Civilian",
+                "Armored Truck Driver",
+                "Security Guard",
+                "Manager"
+            ]
+        },
+        {
+            "Location":"Аэропорт",
+            "Roles":[
+                "First Class Passenger",
+                "Air Marshall",
+                "Air Hostess",
+                "Flight Attendant",
+                "Co-Pilot",
+                "Captain",
+                "Economy Class Passenger"
+            ]
+        },
+        {
+            "Location":"Пляж",
+            "Roles":[
+                "Beach Waitress",
+                "Kite Surfer",
+                "Lifeguard",
+                "Thief",
+                "Beach Photographer",
+                "Ice Cream Truck Driver",
+                "Beach Goer",
+                "Beach Stand Worker"
+            ]
+        },
+        {
+            "Location":"Церковь",
+            "Roles":[
+                "Priest",
+                "Beggar",
+                "Sinner",
+                "Tourist",
+                "Sponsor",
+                "Choir Member",
+                "Father"
+            ]
+        },
+        {
+            "Location":"Цирк",
+            "Roles":[
+                "Acrobat",
+                "Animal Trainer",
+                "Magician",
+                "Fire Eater",
+                "Clown",
+                "Juggler",
+                "Visitor"
+            ]
+        },
+        {
+            "Location":"Корпоративная Вечеринка",
+            "Roles":[
+                "Entertainer",
+                "Manager",
+                "Unwanted Guest",
+                "Owner",
+                "Secretary",
+                "Delivery Boy",
+                "Accountant"
+            ]
+        },
+        {
+            "Location":"Армия Крестоносцев",
+            "Roles":[
+                "Monk",
+                "Imprisoned Sacracen",
+                "Servant",
+                "Bishop",
+                "Squire",
+                "Archer",
+                "Knight"
+            ]
+        },
+        {
+            "Location":"Казино",
+            "Roles":[
+                "Dealer",
+                "Bartender",
+                "Head Security Guard",
+                "Bouncer",
+                "Manager",
+                "Hustler",
+                "Gambler"
+            ]
+        },
+        {
+            "Location":"Спа Салун",
+            "Roles":[
+                "Stylist",
+                "Masseuse",
+                "Manicurist",
+                "Makeup Artist",
+                "Dermatologist",
+                "Beautician",
+                "Customer"
+            ]
+        },
+        {
+            "Location":"Посольство",
+            "Roles":[
+                "Security Guard",
+                "Ambassadar",
+                "Secretary",
+                "Tourist",
+                "Refugee",
+                "Diplomat",
+                "Government Official"
+            ]
+        },
+        {
+            "Location":"Госпиталь",
+            "Roles":[
+                "Nurse",
+                "Doctor",
+                "Anthesiologist",
+                "Intern",
+                "Therapist",
+                "Surgeon",
+                "Patient",
+                "Radiology Technician"
+            ]
+        },
+        {
+            "Location":"Отель",
+            "Roles":[
+                "Doorman",
+                "Security Guard",
+                "Manager",
+                "Housekeeper",
+                "Bartender",
+                "Bellman",
+                "Customer"
+            ]
+        },
+        {
+            "Location":"Военная база",
+            "Roles":[
+                "Deserter",
+                "Colonel",
+                "Private",
+                "Medic",
+                "Sniper",
+                "Officier",
+                "Tank Engineer",
+                "Soldier"
+            ]
+        },
+        {
+            "Location":"Киностудия",
+            "Roles":[
+                "Stunt Man",
+                "Sound Engineer",
+                "Camera Man",
+                "Director",
+                "Costume Artist",
+                "Producer",
+                "Actor"
+            ]
+        },
+        {
+            "Location":"Морской Лайнер",
+            "Roles":[
+                "Cook",
+                "Captain",
+                "Bartender",
+                "Musician",
+                "Waiter",
+                "Mechanic",
+                "Rich Passenger",
+                "Passenger"
+            ]
+        },
+        {
+            "Location":"Пассажирский Поезд",
+            "Roles":[
+                "Mechanic",
+                "Border Patrol",
+                "Train Attendant",
+                "Restaurant Chef",
+                "Train Driver",
+                "Stoker",
+                "Passenger"
+            ]
+        },
+        {
+            "Location":"Пиратский Корабль",
+            "Roles":[
+                "Cook",
+                "Slave",
+                "Cannoneer",
+                "Tied Up Prisoner",
+                "Cabin Boy",
+                "Brave Captain",
+                "Sailor",
+                "Parrot"
+            ]
+        },
+        {
+            "Location":"Полярная Станция",
+            "Roles":[
+                "Medic",
+                "Expedition Leader",
+                "Biologist",
+                "Radioman",
+                "Hydrologist",
+                "Meteorologist",
+                "Geologist"
+            ]
+        },
+        {
+            "Location":"Отделение Полиции",
+            "Roles":[
+                "Detective",
+                "Lawyer",
+                "Journalist",
+                "Criminal",
+                "Archivist",
+                "Patrol Officier",
+                "Police Officier"
+            ]
+        },
+        {
+            "Location":"Зал Суда",
+            "Roles":[
+                "Criminal",
+                "Lawyer",
+                "Planktiff",
+                "Defendant",
+                "Criminal",
+                "Judge",
+                "Baliff",
+                "Jury Member",
+                "Civilian",
+                "Guard"
+            ]
+        },
+        {
+            "Location":"Ресторан",
+            "Roles":[
+                "Musician",
+                "Bouncher",
+                "Hostess",
+                "Head Chef",
+                "Sous Chef",
+                "Line Chef",
+                "Food Critic",
+                "Waiter",
+                "Customer"
+            ]
+        },
+        {
+            "Location":"Школа",
+            "Roles":[
+                "Gym Teacher",
+                "English Teacher",
+                "Math Teacher",
+                "Principle",
+                "Faculty Staff",
+                "Cafertia Lady",
+                "Janitor",
+                "Student"
+            ]
+        },
+        {
+            "Location":"Автомастерская",
+            "Roles":[
+                "Manager",
+                "Tire Specialist",
+                "Biker",
+                "Car Owner",
+                "Car Was Operator",
+                "Electrician",
+                "Auto Mechanic"
+            ]
+        },
+        {
+            "Location":"Космическая Станция",
+            "Roles":[
+                "Engineer",
+                "Alien",
+                "Pilot",
+                "Commander",
+                "Scientist",
+                "Doctor",
+                "Space Tourist"
+            ]
+        },
+        {
+            "Location":"Подводная Лодка",
+            "Roles":[
+                "Cook",
+                "Commander",
+                "Sonar Technician",
+                "Electronics Technician",
+                "Radioman",
+                "Navigator",
+                "Sailor"
+            ]
+        },
+        {
+            "Location":"Супермаркет",
+            "Roles":[
+                "Cashier",
+                "Butcher",
+                "Janitor",
+                "Security Guard",
+                "Food Sample Demonstrator",
+                "Shelf Stocker",
+                "Customer"
+            ]
+        },
+        {
+            "Location":"Театр",
+            "Roles":[
+                "Coat Check Lady",
+                "Prompter",
+                "Cashier",
+                "Director",
+                "Actor",
+                "Crew Man",
+                "Janitor",
+                "Student"
+            ]
+        },
+        {
+            "Location":"Университет",
+            "Roles":[
+                "Graduate Student",
+                "Professor",
+                "The Dean",
+                "Janitor",
+                "Student",
+                "Psychologist",
+                "Maintenance Man",
+                "Librarian",
+                "Tech Support"
+            ]
+        },
+        {
+            "Location":"Отряд II Мировой Войны",
+            "Roles":[
+                "Resistance Fighter",
+                "Radioman",
+                "Scout",
+                "Medic",
+                "Cook",
+                "Imprisoned Nazi",
+                "Soldier"
+            ]
+        },
+        {
+            "Location":"Дом",
+            "Roles":[
+                "Glass Window",
+                "Door",
+                "Light Switch",
+                "Toilet",
+                "Trashcan",
+                "Refridgerator",
+                "Chimney",
+                "Stove",
+                "Sink"
+            ]
+        },
+        {
+            "Location":"Бордель",
+            "Roles":[
+                "Whore",
+                "Hooker",
+                "Pervert",
+                "Bouncher",
+                "Bartender",
+                "Manager",
+                "Janitor",
+                "Stripper"
+            ]
+        },
+        {
+            "Location":"Монастырь",
+            "Roles":[
+                "Monk",
+                "Buddhist",
+                "Prayer",
+                "Disciple",
+                "Cook",
+                "Teacher"
+            ]
+        },
+        {
+            "Location":"Качалка",
+            "Roles":[
+                "Buff Guy",
+                "Sweaty Guy",
+                "Try-Hard Guy",
+                "Yoga Pants Wearing Girl",
+                "Janitor",
+                "Old Guy In The Shower"
+            ]
+        },
+        {
+            "Location":"Мейд Кафе",
+            "Roles":[
+                "Maid",
+                "Waiter",
+                "Waitress",
+                "Customer",
+                "Singer",
+                "Cook",
+                "Weeaboo",
+                "Janitor"
+            ]
+        },
+        {
+            "Location":"Предательское Агенство",
+            "Roles":[
+                "Traitor"
+            ]
+        }
+    ]
+}
