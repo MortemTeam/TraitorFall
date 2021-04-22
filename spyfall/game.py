@@ -50,7 +50,7 @@ class Game:
         self.is_live = False
 
         # the amount of time in seconds available in each round (default: 480 seconds or 8 minutes)
-        self.round_time = 480
+        self.round_time = 120
 
         # time left in seconds
         self.time_left = self.round_time
@@ -97,7 +97,7 @@ class Game:
             return await self.channel.send('Мало игроков.')
 
         self.is_live = True
-        self.time_left = time.time() + self.round_time
+        self.time_left = time.time() + self.round_time * len(self.players)
         self.location = random.choice(self.loc_list)
         random.choice(self.players).role = SPY
         
