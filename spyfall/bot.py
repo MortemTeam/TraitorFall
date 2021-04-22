@@ -1,4 +1,5 @@
 import discord
+from discord import Message
 from discord.ext import commands
 from discord.ext.commands import Bot
 
@@ -24,7 +25,11 @@ async def on_ready():
     game.guild   = await bot.fetch_guild(config.GAME_GUILD)    
 
 @bot.event
-async def on_message(message):
+async def on_message(message: Message):
+    if message.channel == game.channel and message.author != bot.user:
+        if game.is_live and not game.get_player(message.author):
+            return await message.delete()
+    
     def check_trigger(arg=''):
         return message.content.lower().startswith(bot_trigger + arg) 
 
