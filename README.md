@@ -1,26 +1,39 @@
-# Discord Spyfall Bot
-General bot that creates a spyfall game, assigning roles and locations to all players who join.
-
-# Dependencies
-- discord client
-- discord api library
-- python 3.5
-- friends
-
-# Setup
-1. clone this repository or download the master branch
-2. acquire a discord token from [Here](https://discordapp.com/developers/applications/me)
-3. rename `config.json.example` to `config.json`
-4. edit the file to add in your privately generated bot token key
-5. Invited your bot to your server and give it permission to read and send messages
-6. Optionally, if you wish to add your own custom locations, you may do so as you pleased, the file is called `spyfall_locations.json`, editing the file and restart the bot, assuming there are no **syntax** error, will automatically be added.
-
-# Usage
-`<Command_Trigger>` is the trigger used to initiliaze the bot. (See `config.json` to change the trigger)
 ```
-<Command_Trigger> Join -- join the game
-<Command_Trigger> Leave -- leaves the game
-<Command_Trigger> Startgame -- starts the game, and displays a list of all locations
-<Command_Trigger> Players -- displays a list of people who are currently joined / playing
-<Command_Trigger> Purge -- wipes everyone from the user list
-```
+                                    .d-                                    
+                             .     :d-h/     -                             
+                      .      `+   +h```yo   /-      .                      
+                      -/      h. ss :N/ os `d      ::                      
+               .`      o+     oyy+ +MMMo /hys     /s       .               
+                /:      ho  ` /N: sMMNMMy`:N+ `  +d`     :/                
+                 :y-    .Ns /oh-`hMMy`sMMh`-ho+ oN.    .y/                 
+         `:-      -ds` o./My+d..dMMo   +MMm.`hosM/`o``od-      -:.         
+           -o+`   ``ym/-m+sMy`-mMN/     /NMN:`sMy+m-/mh.`   `/o-           
+             :yy: :o:oNdyMms`/NMN:       -mMN+ omMyhNs:o: :sy:`            
+     ---`     `:hdo/ddhMMM+ oNMm-         .dMMo`/NMMhdd/+dh/`      ---     
+      `.+o+-` /+/+dNdNMMN:`sMMh.           `hMMy`:NMMMdNdo//. `-+o+-`      
+         `-ohho+ydmNMMMm-`hMMy`             `sMMh..dMMMNmy+:+yho:`         
+  ..`      .:/sdmmMMMMd..dMMo                 +NMm-`hMMMNdmds/:.       ..` 
+  `.:+++/:--:ohdmMMMMy`:mMN/    .-://+//:-.`   /NMN:`sMMMMmdhs/--:/+++:.`  
+      `.:+syhddmMMMMs`/NMm:`-+ydmNmmdddmmNmdy+-`-mMN+`oMMMMmdddhs+:.`      
+         -:+oydMMMN+`oNMm+sdNMmy+:::----::/sdNNms+mMMo`/NMMMdys+:-         
+..--::::::/+shNMMN:`sMMMmNMMmhyhdhhNNNNNdhhhyyhNMMmMMMy`:mMMNhs+/::::::--..
+ ``..-:/+oshdmNMm-`hMMMMMMNdhosMo.yMMMMMm./Mh+ydNMMMMMMd..dMNmdyso+/:-..`` 
+        `:+sydMh..dMMMMNs:-`  /Mo yMMMMMm :M/  `.:oNMMMMm-`hMdys+:.        
+   ``..-:/oyhmy`:mMNsdMMd+.   `hN/./ydho.-mh    .+dMMmsNMN:`smdyo/:-..``   
+.-:://+++++omo`/NMm: `/hNMNh/.``+dhs+//ohdo``./ymMNh/` -mMN+`omo+++++//::-.
+         -om+`oMMd.     -odNMNds+:+oyyys+/+sdNMNdo-     .dMMs`/do-         
+       `./h:`yMMh`         -/ydmNMMNmmmNMMNNdy+-         `yMMy`-h/.`       
+  ``-/oohm-.hMMs`              .-:+oosoo+/-.               sMMd..ddoo/-``  
+  ...` /y.-dMNo                                             +NMm-`y+ `..`  
+      +y`:NMMmsssssssssssssssssssssssssssssssssssssssssssssssmMMN/`so`     
+    `so :mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm: +y`    
+   `hy--:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::--sh`   
+   ./////////omd+/sdohMmyMNMMMMMMMMMMMMMMMMMMMMMNMhmMh+hs/+hmo/::::::::.   
+           .+o-   .`oNs-mssMdmMmMMMMMMMMMNMmMNhMssm-oNs`.   -oo.           
+         `-:`     `hh. o--Nh.NoyMoNmsMymN+Mh+M-hM:-s .yh.     `::`         
+                 -h:    `mh`/o Nm d//M+:m dN`++ ym` `  :h-       `         
+                :+`     yy  . -M: o -M: o -M: .  sh      +/                
+               ..      /s     oh    `M.    ys     o+      `-               
+                      .+      h.     N`    .d      +-                      
+                      .      `s      h      o.      .                      
+                             -`      +       :                             
