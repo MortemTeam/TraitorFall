@@ -1,64 +1,41 @@
-import discord
+from configparser import ConfigParser
+
 from discord import Message
-from discord.ext import commands
 from discord.ext.commands import Bot
 
-import game
-import config
+import terminal
+import states
 
-import asyncio
-import json
+config = ConfigParser(allow_no_value=True)
+config.read("config.ini")
 
-bot_token = config.TOKEN
-bot_trigger = config.PREFIX
+terminal.info("Initializing...")
 
-bot = Bot(command_prefix=bot_trigger)
-game = game.Game(bot)
+bot = Bot(command_prefix=config.get("AUTH", "PREFIX"))
+
+
+class Game:
+    guild = channel = None
+    admins = []
+    state = states.IDLE
+
 
 @bot.event
 async def on_ready():
-    print("Bot User-Name: %s" % bot.user)
-    print("Bot User-ID: %s" % bot.user.id)
-    print("--------------------")
-    
-    game.channel = await bot.fetch_channel(config.GAME_CHANNEL)
-    game.guild   = await bot.fetch_guild(config.GAME_GUILD)    
+    Game.guild = await bot.fetch_guild(config.getint("GUILD", "GUILD_ID"))
+    Game.channel = await bot.fetch_channel(config.getint("GUILD", "CHANNEL_ID"))
+    Game.admins = [
+        await Game.guild.fetch_member(x) for x in filter(lambda x: x, config.get("GUILD", "ADMINS").split(" "))
+    ]
+
+    terminal.info("Guild: %s" % Game.guild.name)
+    terminal.info("Channel: %s/%s" % (Game.channel.category, Game.channel.name))
+    terminal.info("Admins: %s" % ", ".join("{}#{}".format(x.nick, x.discriminator) for x in Game.admins))
+    terminal.successful("Started: %s" % bot.user)
+
 
 @bot.event
 async def on_message(message: Message):
-    if message.channel == game.channel and message.author != bot.user:
-        if game.is_live and not game.get_player(message.author):
-            return await message.delete()
-    
-    def check_trigger(arg=''):
-        return message.content.lower().startswith(bot_trigger + arg) 
+    pass
 
-    if check_trigger('players'):
-        await game.show_player()
-
-    if check_trigger('loc'):
-        await game.show_locations(message.author)
-
-    if not game.is_live:
-        if check_trigger('start'):
-            await game.start_game()
-
-        if check_trigger('join'):
-            await game.join_player(message.author)
-        
-        if check_trigger('leave'):
-            await game.leave_player(message.author)
-
-    
-    if game.get_player(message.author):
-        # choice location by Traitor
-        if check_trigger('c'):
-            await game.choice_location(message.author, message.content.split(" ")[-1])
-        
-        if check_trigger('reveal'):
-            await game.end_game()        
-
-    if check_trigger():
-        await message.delete()
-
-bot.run(bot_token)
+bot.run(config.get("AUTH", "TOKEN"))
