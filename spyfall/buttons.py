@@ -1,0 +1,5 @@
+JOIN = "🤟"
+LOCATIONS = "🗺️"
+RESTART = "⏰"
+START = "✅"
+CLOSE = "❌"

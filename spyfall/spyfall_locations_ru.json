@@ -1,5 +1,4 @@
-{
-    "locations":[
+[
         {
             "Location":"Банк",
             "Roles":[
@@ -76,7 +75,7 @@
             "Location":"Армия Крестоносцев",
             "Roles":[
                 "Monk",
-                "Imprisoned Sacracen",
+                "Imprisoned Sacrament",
                 "Servant",
                 "Bishop",
                 "Squire",
@@ -112,7 +111,7 @@
             "Location":"Посольство",
             "Roles":[
                 "Security Guard",
-                "Ambassadar",
+                "Ambassador",
                 "Secretary",
                 "Tourist",
                 "Refugee",
@@ -125,7 +124,7 @@
             "Roles":[
                 "Nurse",
                 "Doctor",
-                "Anthesiologist",
+                "Anesthesiologist",
                 "Intern",
                 "Therapist",
                 "Surgeon",
@@ -153,7 +152,7 @@
                 "Private",
                 "Medic",
                 "Sniper",
-                "Officier",
+                "Officer",
                 "Tank Engineer",
                 "Soldier"
             ]
@@ -200,7 +199,7 @@
             "Roles":[
                 "Cook",
                 "Slave",
-                "Cannoneer",
+                "Cannery",
                 "Tied Up Prisoner",
                 "Cabin Boy",
                 "Brave Captain",
@@ -228,8 +227,8 @@
                 "Journalist",
                 "Criminal",
                 "Archivist",
-                "Patrol Officier",
-                "Police Officier"
+                "Patrol Officer",
+                "Police Officer"
             ]
         },
         {
@@ -237,11 +236,11 @@
             "Roles":[
                 "Criminal",
                 "Lawyer",
-                "Planktiff",
+                "Plaintiff",
                 "Defendant",
                 "Criminal",
                 "Judge",
-                "Baliff",
+                "Bailiff",
                 "Jury Member",
                 "Civilian",
                 "Guard"
@@ -251,7 +250,7 @@
             "Location":"Ресторан",
             "Roles":[
                 "Musician",
-                "Bouncher",
+                "Bouncer",
                 "Hostess",
                 "Head Chef",
                 "Sous Chef",
@@ -269,7 +268,7 @@
                 "Math Teacher",
                 "Principle",
                 "Faculty Staff",
-                "Cafertia Lady",
+                "Cafeteria Lady",
                 "Janitor",
                 "Student"
             ]
@@ -369,7 +368,7 @@
                 "Light Switch",
                 "Toilet",
                 "Trashcan",
-                "Refridgerator",
+                "Refrigerator",
                 "Chimney",
                 "Stove",
                 "Sink"
@@ -381,7 +380,7 @@
                 "Whore",
                 "Hooker",
                 "Pervert",
-                "Bouncher",
+                "Bouncer",
                 "Bartender",
                 "Manager",
                 "Janitor",
@@ -429,5 +428,4 @@
                 "Traitor"
             ]
         }
-    ]
-}
+]
