@@ -11,3 +11,4 @@ ADMINS
 [GAME]
 LOCATIONS_FILE = spyfall_locations_ru.json
 ANTAGONIST = Traitor
+MIN_PLAYERS = 3

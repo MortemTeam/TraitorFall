@@ -28,6 +28,7 @@ async def on_ready():
     ]
     Game.intents = [buttons.JOIN, buttons.LOCATIONS, buttons.RESTART, buttons.START, buttons.CLOSE]
 
+    Game.min_players = config.getint("GAME", "MIN_PLAYERS")
     Game.antagonist = config.get("GAME", "ANTAGONIST")
     with open(config.get("GAME", "LOCATIONS_FILE"), encoding='utf8') as file:
         Game.locations = json.loads(file.read())
@@ -45,11 +46,14 @@ async def on_command_error(ctx: Context, err: CommandNotFound):
 
 @bot.group()
 async def start(ctx: Context):
+    if ctx.channel.id != Game.channel.id:
+        return
+
     if Game.state != states.IDLE:
         return await ctx.reply(embed=Embed(description="Игра уже началась!", colour=Game.state))
 
     Game.state = states.LOBBY
-    message = await ctx.reply(
+    message: Message = await ctx.reply(
         embed=Game.get_embed()
     )
 
@@ -72,24 +76,39 @@ async def on_raw_reaction_add(payload: RawReactionActionEvent):
         await message.remove_reaction(payload.emoji, user)
 
     if payload.emoji.name == buttons.LOCATIONS:
-        await user.send(embed=Embed(
+        return await user.send(embed=Embed(
             title="Список локаций и ролей:",
-            description="\n\n".join(
-                "{}. {}\n{}".format(i, x['Location'], "\n".join("- {}".format(y) for y in x['Roles']))
+            description="\n".join(
+                "{}. {}".format(i, x['Location'])  # "\n".join("- {}".format(y) for y in x['Roles'])
                 for i, x in enumerate(Game.locations, 1)
             )))
+
+    if payload.emoji.name == buttons.CLOSE and message != Game.message:
+        return await message.delete()
 
     if message == Game.message:
         if payload.emoji.name == buttons.JOIN:
             Game.lobby.append(user)
-            await message.edit(embed=Game.get_embed())
-            return
+            return await message.edit(embed=Game.get_embed())
+
+        if payload.emoji.name == buttons.RESTART:
+            await Game.channel.send(embed=Embed(description="Таймер перезапущен!", colour=Game.state))
+            return close_lobby.restart()
+
+        if payload.emoji.name == buttons.START:
+            if Game.can_start():
+                await Game.channel.send(embed=Embed(
+                    description="Игра начинается, ожидайте раздачи карт!",
+                    colour=Game.state,
+                ))
+                return await Game.start()
+
+            return await Game.channel.send(embed=Embed(
+                description="Недостаточно игроков для старта...",
+                colour=Game.state,
+            ))
 
         if user in Game.admins:
-            if payload.emoji.name == buttons.RESTART:
-                await Game.channel.send(embed=Embed(description="Таймер перезапущен!", colour=Game.state))
-                close_lobby.restart()
-
             if payload.emoji.name == buttons.CLOSE:
                 Game.reset()
 
@@ -98,7 +117,7 @@ async def on_raw_reaction_add(payload: RawReactionActionEvent):
                 await message.edit(embed=Game.get_embed())
 
                 close_lobby.false_start = True
-                close_lobby.cancel()
+                return close_lobby.cancel()
 
 
 @bot.event
@@ -121,6 +140,10 @@ async def close_lobby(message: Message):
     if close_lobby.false_start:
         close_lobby.false_start = False
         return
+
+    if Game.can_start():
+        await Game.channel.send(embed=Embed(description="Игра начинается, ожидайте раздачи карт!", colour=Game.state))
+        return await Game.start()
 
     Game.reset()
     await message.clear_reactions()
