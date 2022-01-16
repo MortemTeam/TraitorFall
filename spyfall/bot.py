@@ -101,6 +101,8 @@ async def on_raw_reaction_add(payload: RawReactionActionEvent):
                     description="Игра начинается, ожидайте раздачи карт!",
                     colour=Game.state,
                 ))
+                close_lobby.false_start = True
+                close_lobby.cancel()
                 return await Game.start()
 
             return await Game.channel.send(embed=Embed(
@@ -141,6 +143,9 @@ async def close_lobby(message: Message):
         close_lobby.false_start = False
         return
 
+    close_lobby.false_start = True
+    close_lobby.cancel()
+
     if Game.can_start():
         await Game.channel.send(embed=Embed(description="Игра начинается, ожидайте раздачи карт!", colour=Game.state))
         return await Game.start()
@@ -148,9 +153,6 @@ async def close_lobby(message: Message):
     Game.reset()
     await message.clear_reactions()
     await message.edit(embed=Embed(description="Игроков не набралось...", colour=Game.state))
-
-    close_lobby.false_start = True
-    close_lobby.cancel()
 
 
 close_lobby.false_start = True
